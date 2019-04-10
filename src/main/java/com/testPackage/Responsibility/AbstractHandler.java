@@ -3,6 +3,7 @@ package com.testPackage.Responsibility;
 public abstract class AbstractHandler {
     private Handler handler;
 
+
     public Handler getHandler() {
         return handler;
     }
