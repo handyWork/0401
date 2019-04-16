@@ -20,7 +20,10 @@ public class handle {
             move(one,three,n);
             tower(n-1,two,one,three);
         }
-
+/**
+ *  1. 等于3时    将第一个放到第三个
+ *
+ */
 
     }
 
