@@ -14,7 +14,7 @@ public class testProxy {
         //创建出一个代理对象stuProxy来代理张三，代理对象中的每个执行方法都会替换invocation中的invoke方法
         Person  stuProxy = (Person) Proxy.newProxyInstance(Person.class.getClassLoader(), new Class<?>[]{Person.class}, stuHandler);
 
-
+//==========================================================  这块是进行测试用的
         //这里可以通过运行结果证明stuProxy是Proxy的一个实例，这个实例实现了stuProxy接口
         System.out.println(stuProxy instanceof Proxy);
 
@@ -47,7 +47,7 @@ public class testProxy {
         }
 
         System.out.println("\n\n"+"运行结果为：");
-
+//==========================================================
 
         //代理执行交班费的方法
         stuProxy.giveMoney();
