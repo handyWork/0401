@@ -1,8 +1,6 @@
 package com.testPackage.applicationTest.aspectj;
 
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -12,13 +10,24 @@ public class handyAspectj {
     //定义一个切点
     //执行服务包或其子包中定义的任何方法
     @Pointcut("execution(* com.testPackage.applicationTest.service..*.*(..))")
-    public void pointCut(){
+    public void pointCut() {
 
     }
+
     //这个before要作用到哪个切点
     @Before("pointCut()")
-    public void before(){
+    public void before() {
         System.out.println("aop-------befor");
+    }
+
+//    @Around("pointCut()")
+    public void around() {
+        System.out.println("around---------around");
+    }
+
+    @After("pointCut()")
+    public void after() {
+        System.out.println("after-------after");
     }
 
 
