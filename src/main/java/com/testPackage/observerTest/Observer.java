@@ -1,4 +1,4 @@
-package com.testPackage.ObserverTest;
+package com.testPackage.observerTest;
 
 /**
  * 观察者模式

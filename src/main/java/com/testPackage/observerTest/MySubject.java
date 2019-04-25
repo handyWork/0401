@@ -1,4 +1,4 @@
-package com.testPackage.ObserverTest;
+package com.testPackage.observerTest;
 
 //实现接口 或者  继承抽象类的子类必须实现接口的所有方法
 public class MySubject extends AbstractSubject {

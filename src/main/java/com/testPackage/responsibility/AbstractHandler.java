@@ -1,4 +1,4 @@
-package com.testPackage.Responsibility;
+package com.testPackage.responsibility;
 
 public abstract class AbstractHandler {
     private Handler handler;

@@ -1,4 +1,4 @@
-package com.testPackage.Proxy;
+package com.testPackage.proxy;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;

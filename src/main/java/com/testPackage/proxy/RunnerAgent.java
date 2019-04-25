@@ -1,4 +1,4 @@
-package com.testPackage.Proxy;
+package com.testPackage.proxy;
 
 /**
  * 代理类     代理跑步者

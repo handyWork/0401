@@ -1,4 +1,4 @@
-package com.testPackage.Proxy;
+package com.testPackage.proxy;
 
 /**
  * 定义一个检测方法执行时间的工具

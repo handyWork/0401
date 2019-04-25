@@ -1,4 +1,4 @@
-package com.testPackage.Responsibility;
+package com.testPackage.responsibility;
 
 /**
  * 构建一个责任链模式

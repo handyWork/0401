@@ -1,4 +1,4 @@
-package com.testPackage.ObserverTest;
+package com.testPackage.observerTest;
 
 public class Observer1 implements Observer {
     @Override
