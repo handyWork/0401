@@ -1,14 +1,16 @@
 package com.testPackage.threadTest;
 
+import static com.testPackage.proxy.MonitorUtil.start;
+
 public class demo1 implements Runnable {
 
     private String account;
     private String amont;
     int count = 10;
 
-
+    //synchronized   锁的是对象，不是锁的代码块
     @Override
-    public void run() {
+    public synchronized void run() {
         count--;
         System.out.println(count);
     }
@@ -19,9 +21,10 @@ public class demo1 implements Runnable {
 
     public static void main(String[] args) {
         demo1 demo1 = new demo1();
-        Thread thread = new Thread(demo1);
         for(int i = 0;i<5;i++){
-            thread.run();
+            Thread thread = new Thread(demo1);
+            thread .start();
+//            new Thread(demo1).start();
         }
 
     }

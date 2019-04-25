@@ -1,20 +1,28 @@
 package com.testPackage.threadTest;
+//同步方法和非同步方法是否可以同时调用？  结论： 可以同时调用的
+public class demo  {
 
-public class demo {
-    private int count = 10;
-    private Object object = new Object();
-
-    public void teset(){
-        synchronized (this){
-            count--;
-            System.out.println(Thread.currentThread().getName()+"count = "+count);
+    public synchronized  void test1(){
+        System.out.println(Thread.currentThread().getName()+" test1 star");
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
-    }
+        System.out.println(Thread.currentThread().getName()+" test1 end-------");
 
+
+    }
+    public void test2() {
+        System.out.println(Thread.currentThread().getName()+" test2 start-------");
+
+        System.out.println(Thread.currentThread().getName()+" test1 end-------");
+    }
     public static void main(String[] args) {
 
         demo demo = new demo();
-        demo.teset();
+        new Thread(demo::test1).start();
+        new Thread(demo::test2).start();
     }
 
 
