@@ -1,0 +1,38 @@
+---------------------测试锁机制的一些sql语句--------------------
+
+-- 正常查询
+SELECT SCHD_HDMC,SCHD_BZ,SCHD_FZR FROM CRM_YXGL_SCHD WHERE SCHD_FZRID = 'gFPvaZbdFK4w1jilucA'
+
+
+--  只有通过索引条件检索数据，InnoDB才会使用行级锁，否则，InnoDB将使用表锁！
+-- 测试时需要开两个线程来测试
+-- 排它锁
+BEGIN;
+SELECT SCHD_HDMC,SCHD_BZ,SCHD_FZR FROM CRM_YXGL_SCHD WHERE SCHD_FZRID = 'gFPvaZbdFK4w1jilucA' FOR UPDATE;
+commit;
+-- 共享锁
+BEGIN;
+SELECT SCHD_HDMC,SCHD_BZ,SCHD_FZR FROM CRM_YXGL_SCHD WHERE SCHD_FZRID = 'gFPvaZbdFK4w1jilucA' LOCK IN SHARE MODE
+commit;
+-- 表锁的话  需要先将表锁住  自动提交改为0
+SET AUTOCOMMIT=0;
+LOCK TABLES CRM_YXGL_SCHD WRITE;
+SELECT SCHD_HDMC,SCHD_BZ,SCHD_FZR FROM CRM_YXGL_SCHD WHERE SCHD_FZRID = 'gFPvaZbdFK4w1jilucA'
+COMMIT;
+UNLOCK TABLES;
+-- 对当前表进行读锁定
+LOCK TABLES CRM_YXGL_SCHD READ;
+
+
+UPDATE CRM_YXGL_SCHD SET SCHD_HDMC = '1666' WHERE SCHD_FZRID = 'gFPvaZbdFK4w1jilucA'
+
+--  查看正在锁的事务
+SELECT * FROM INFORMATION_SCHEMA.INNODB_LOCKS;
+
+-- 支持的存储引擎
+show engines;
+
+SHOW PROCESSLIST
+--  当前使用版本
+show variables like '%storage_engine%';
+select version();
