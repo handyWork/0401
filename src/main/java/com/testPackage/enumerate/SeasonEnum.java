@@ -1,4 +1,4 @@
-package com.note.enumerate;
+package com.testPackage.enumerate;
 
 /**
  * 季节枚举类

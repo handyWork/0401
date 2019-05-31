@@ -1,7 +1,6 @@
 package com.testPackage.abstractTest;
 
-import com.note.enumerate.SeasonEnum;
-import com.note.sington.SingletonClass;
+import com.testPackage.enumerate.SeasonEnum;
 
 public class mainTest {
 

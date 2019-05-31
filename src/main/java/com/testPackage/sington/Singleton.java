@@ -1,4 +1,4 @@
-package com.note.sington;
+package com.testPackage.sington;
 
 /**
  * 单例模式之饿汉
