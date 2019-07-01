@@ -20,9 +20,17 @@ public class demo  {
     }
     public static void main(String[] args) {
 
-        demo demo = new demo();
-        new Thread(demo::test1).start();
-        new Thread(demo::test2).start();
+//        demo demo = new demo();
+//        new Thread(demo::test1).start();
+//        new Thread(demo::test2).start();
+//        String tet = "";
+        String abc = "123";
+        String cd = "BCD";
+        abc = abc.concat(cd);
+        System.out.println(abc);
+        String str = "abc";
+        str = str.concat("123");
+        System.out.println(str);
     }
 
 

@@ -1,6 +1,9 @@
 package com.testPackage.threadTest;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -12,6 +15,8 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class demo5  {
 
+    private final Logger log = LoggerFactory.getLogger(ReadWriteLockTest.class);
+
     private Lock lock = new ReentrantLock();
 
     private  void method(Thread thread) {
@@ -21,6 +26,7 @@ public class demo5  {
             Thread.sleep(2000);
         } catch (Exception e) {
             e.printStackTrace();
+            log.error("错误信息是{}",e.getMessage());
         } finally {
             lock.unlock();
             System.out.println("线程名：" + thread.getName() + "释放了锁");
@@ -41,7 +47,6 @@ public class demo5  {
         }else{
             System.out.println("获取不到锁对象，我退出！");
         }
-
     }
 
     /**

@@ -6,8 +6,14 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class ReadWriteLockTest {
 
+
     public static void main(String[] args) {
         final Data data = new Data();
+        try {
+            int b = 4/3;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         for (int i = 0; i < 3; i++) {
             new Thread(new Runnable() {
                 @Override
