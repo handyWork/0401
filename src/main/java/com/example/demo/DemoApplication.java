@@ -8,9 +8,10 @@ import org.springframework.context.annotation.ComponentScan;
 
 //1，@EnableDiscoveryClient注解是基于spring-cloud-commons依赖，并且在classpath中实现；
 //		2，@EnableEurekaClient注解是基于spring-cloud-netflix依赖，只能为eureka作用；
-@EnableEurekaClient
+//@EnableEurekaClient
 @SpringBootApplication
-@ComponentScan("com.springBoot.controllers")
+// TODO    修改了路径
+@ComponentScan("com.springBoot")
 public class DemoApplication {
 
 	public static void main(String[] args) {
