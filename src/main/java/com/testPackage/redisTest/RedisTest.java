@@ -1,6 +1,7 @@
 package com.testPackage.redisTest;
 
 
+import com.example.demo.DemoApplication;
 import javafx.application.Application;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,7 +11,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import javax.annotation.Resource;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = Application.class)
+//加载的主类
+@SpringBootTest(classes = DemoApplication.class)
 public class RedisTest {
 
     @Resource

@@ -11,7 +11,7 @@ import org.springframework.context.annotation.ComponentScan;
 //@EnableEurekaClient
 @SpringBootApplication
 // TODO    修改了路径
-@ComponentScan("com.springBoot")
+@ComponentScan({"com.springBoot","com.testPackage"})
 public class DemoApplication {
 
 	public static void main(String[] args) {
