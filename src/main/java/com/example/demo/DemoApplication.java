@@ -2,15 +2,15 @@ package com.example.demo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+// TODO
+//import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+//import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.ComponentScan;
 
 //1，@EnableDiscoveryClient注解是基于spring-cloud-commons依赖，并且在classpath中实现；
 //		2，@EnableEurekaClient注解是基于spring-cloud-netflix依赖，只能为eureka作用；
 //@EnableEurekaClient
 @SpringBootApplication
-// TODO    修改了路径
 @ComponentScan({"com.springBoot","com.testPackage"})
 public class DemoApplication {
 
