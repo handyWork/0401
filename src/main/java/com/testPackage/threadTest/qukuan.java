@@ -31,7 +31,7 @@ class processor implements Runnable {
 
     @Override
     public void run() {
-        //放在方法上也是一样的效果
+        //放在方法上也是一样的效果，  不过放在方法中是锁定的整个方法可能会造成一些不必加同步的代码也加上了，使程序运行缓慢；倾向于用代码块的方式；
         synchronized (this) {
             System.out.println(Thread.currentThread().getName());
             account.withdraw(1000.0);
