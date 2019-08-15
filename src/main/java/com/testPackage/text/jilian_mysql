@@ -1,0 +1,85 @@
+
+CREATE TABLE `zz_js` (
+`ZZ_BJ_ID`  varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '班级_外键ID' ,
+`JS_JSMC`  varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '教师名称' ,
+`JS_JSID`  varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '教师ID' ,
+`ZZ_JS_ID`  varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '主键ID' ,
+`SY_AUDFLAG`  varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '审核标记' ,
+`SY_CREATEORGID`  varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '登记部门主键' ,
+`SY_CREATEORG`  varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '登记部门编码' ,
+`SY_CREATEORGNAME`  varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '登记部门' ,
+`SY_CREATETIME`  varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '登记时间' ,
+`SY_CREATEUSERID`  varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '登记人主键' ,
+`SY_CREATEUSER`  varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '登记人编码' ,
+`SY_CREATEUSERNAME`  varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '登记人' ,
+`SY_STATUS`  varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '数据状态' ,
+`SY_ORDERINDEX`  int(11) NULL DEFAULT NULL COMMENT '排序字段' ,
+`SY_PIID`  varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '流程实例ID' ,
+`SY_PDID`  varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '流程定义ID' ,
+`SY_JTGSMC`  varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '集团公司名称' ,
+`SY_JTGSID`  varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '集团公司ID' ,
+PRIMARY KEY (`ZZ_JS_ID`),
+FOREIGN KEY (`ZZ_BJ_ID`) REFERENCES `zz_bj` (`ZZ_BJ_ID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+INDEX `JE_1565869198225_ORDER` (`SY_ORDERINDEX`) USING BTREE ,
+INDEX `JE_20190815194021` (`ZZ_BJ_ID`) USING BTREE
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=utf8mb4 COLLATE=utf8mb4_general_ci
+COMMENT='教师'
+ROW_FORMAT=DYNAMIC
+;
+
+
+
+
+CREATE TABLE `zz_bj` (
+`BJ_BJMC`  varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '班级名称' ,
+`BJ_XS`  varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '学生' ,
+`BJ_XSID`  varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '学生ID' ,
+`ZZ_BJ_ID`  varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '主键ID' ,
+`SY_AUDFLAG`  varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '审核标记' ,
+`SY_CREATEORGID`  varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '登记部门主键' ,
+`SY_CREATEORG`  varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '登记部门编码' ,
+`SY_CREATEORGNAME`  varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '登记部门' ,
+`SY_CREATETIME`  varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '登记时间' ,
+`SY_CREATEUSERID`  varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '登记人主键' ,
+`SY_CREATEUSER`  varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '登记人编码' ,
+`SY_CREATEUSERNAME`  varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '登记人' ,
+`SY_STATUS`  varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '数据状态' ,
+`SY_ORDERINDEX`  int(11) NULL DEFAULT NULL COMMENT '排序字段' ,
+`SY_PIID`  varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '流程实例ID' ,
+`SY_PDID`  varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '流程定义ID' ,
+`SY_JTGSMC`  varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '集团公司名称' ,
+`SY_JTGSID`  varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '集团公司ID' ,
+PRIMARY KEY (`ZZ_BJ_ID`),
+INDEX `JE_1565869153217_ORDER` (`SY_ORDERINDEX`) USING BTREE
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=utf8mb4 COLLATE=utf8mb4_general_ci
+COMMENT='班级'
+ROW_FORMAT=DYNAMIC
+;
+
+
+-- 设置级联更新
+
+insert into zz_bj (BJ_BJMC,BJ_XS,ZZ_BJ_ID) VALUES ("一年级1班","小明","110");
+
+INSERT INTO zz_js(JS_JSMC, JS_JSID,ZZ_BJ_ID) VALUES("李老师","123","110");
+
+-- 教师
+SELECT * FROM zz_js;
+-- 班级
+SELECT * FROM zz_bj;
+
+DELETE FROM zz_bj;
+
+DELETE FROM zz_js;
+
+DELETE  FROM zz_bj WHERE ZZ_BJ_ID = "110"
+
+-- CASCADE：父表delete、update的时候，子表会delete、update掉关联记录；
+-- SET NULL：父表delete、update的时候，子表会将关联记录的外键字段所在列设为null，所以注意在设计子表时外键不能设为not null；
+-- RESTRICT：如果想要删除父表的记录时，而在子表中有关联该父表的记录，则不允许删除父表中的记录；
+-- NO ACTION：同 RESTRICT，也是首先先检查外键；
+
