@@ -61,6 +61,16 @@ private void add(String string){
         concernIds.add("2");
         concernIds.add("3");
         concernIds.add("4");
+
+        // 通过迭代器来删除
+//        Iterator<String> it = concernIds.iterator();
+//        while (it.hasNext() ) {
+//            if(it.next().equals("4")){
+//                System.out.println("存在了");
+//                it.remove();
+//            }
+//        }
+
         // item  是指循环concernIds中的当前的那个元素
         List<String> collect = concernIds.stream().filter(item -> subordinates.contains(item)).distinct()
                 .collect(Collectors.toList());
