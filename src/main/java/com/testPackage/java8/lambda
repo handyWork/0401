@@ -1,0 +1,20 @@
+1. List<Object> 转 List<OtherObject>
+List<Map> usersParameter = JSONArray.parseArray(jsonArray.toString(), Map.class);
+//获取人员信息
+List<String> ids = usersParameter.stream().map(p -> p.get("id").toString()).collect(Collectors.toList());
+
+2.List<Object> 转  Map<Object1,Object2>
+//查询所有人员
+List<DynaBean> users=userManager.getUserByIds(ArrayUtils.join(ids));
+//list转map  key为USERID
+Map<String, DynaBean> usersMap= users.stream().collect(Collectors.toMap(p -> p.getStr("USERID"), p->p));
+
+3.filter  过滤集合
+List<Map> dateFilter= dateNums.stream().filter(p -> p.get("DATE").toString().equals(today)).collect(Collectors.toList());
+
+4.Collectors.summingLong	累加
+Long todayCount = dateNums.stream().filter(p -> p.get("DATE").toString().equals(today))
+        .collect(Collectors.summingLong(p -> Long.parseLong(p.get("NUM").toString())));
+
+5.List去重
+lists.stream().collect(Collectors.collectingAndThen(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(p -> p.getStr(codeField, "")))), ArrayList::new))
