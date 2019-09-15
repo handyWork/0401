@@ -49,6 +49,5 @@ public class testDate {
         testDate test = new testDate();
         System.out.println(test.comepareToDate());
 
-
     }
 }
