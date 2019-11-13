@@ -123,6 +123,10 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <!--这块一定要配置否则打jar的时候会说找不 到主类-->
+                <configuration>
+                    <mainClass>com.example.demo.DemoApplication</mainClass>
+                </configuration>
             </plugin>
         </plugins>
     </build>
