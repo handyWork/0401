@@ -23,6 +23,13 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <spring-cloud.version>Finchley.SR1</spring-cloud.version>
+        <mybatis.version>3.5.3</mybatis.version>
+        <mybatis-spring.version>2.0.3</mybatis-spring.version>
+        <fastJson.version>1.2.15</fastJson.version>
+        <hutool.version>4.1.1</hutool.version>
+        <mysql-connector-java.version>5.1.47</mysql-connector-java.version>
+        <disconf.version>2.6.36</disconf.version>
+        <druid.version>1.1.10</druid.version>
     </properties>
 
     <dependencies>
@@ -95,11 +102,56 @@
         <!--<artifactId>spring-core</artifactId>-->
         <!--</dependency>-->
 
+        <!-- MySQL -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql-connector-java.version}</version>
+        </dependency>
+        <!-- FastJson -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.7</version>
+            <version>${fastJson.version}</version>
         </dependency>
+        <!-- Hutool -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>${hutool.version}</version>
+        </dependency>
+        <!-- mybatis -->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>${mybatis.version}</version>
+        </dependency>
+        <!-- mybatis-spring -->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-spring</artifactId>
+            <version>${mybatis-spring.version}</version>
+        </dependency>
+        <!-- Druid 连接池 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>${druid.version}</version>
+        </dependency>
+
+        <!--百度的配置中心-->
+        <!--<dependency>-->
+            <!--<artifactId>disconf-core</artifactId>-->
+            <!--<groupId>com.baidu.disconf</groupId>-->
+            <!--<version>${disconf.version}</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>com.baidu.disconf</groupId>-->
+            <!--<artifactId>disconf-client</artifactId>-->
+            <!--<version>${disconf.version}</version>-->
+        <!--</dependency>-->
+
+
 
     </dependencies>
     <!--1：如果dependencies里的dependency自己没有声明version元素，那么maven就-->
