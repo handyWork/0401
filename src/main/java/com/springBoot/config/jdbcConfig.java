@@ -9,6 +9,15 @@ import org.springframework.context.annotation.PropertySource;
 import javax.sql.DataSource;
 
 
+// @Configuration：声明我们JdbcConfig是一个配置类
+//@PropertySource：指定属性文件的路径是:classpath:jdbc.properties
+//通过@Value为属性注入值
+//通过@Bean将 dataSource()方法声明为一个注册Bean的方法，Spring会自动调用该方法，将方法的返回值加入Spring容器中。
+//然后我们就可以在任意位置通过@Autowired注入DataSource了！
+
+/**
+ * 用于jdbc的配置信息
+ */
 @Configuration
 @PropertySource("classpath:jdbc.properties")
 public class jdbcConfig {
