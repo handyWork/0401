@@ -6,7 +6,8 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 线程池
+ * 线程池 （java实现异步调用）
+ * 一根线程A运行到 需要调用第三方接口处，调用第三方的时长无法控制，需要单独拉根线程B让其去调用， 线程A继续执行
  */
 public class ExecutorsTest {
 
@@ -113,7 +114,7 @@ public class ExecutorsTest {
 
     public static void main(String[] args) {
         ExecutorsTest executorsTest = new ExecutorsTest();
-//        executorsTest.fixedThreadPool();
+        executorsTest.fixedThreadPool();
 
 //        executorsTest.singleThreadExecutor();
 //
@@ -121,7 +122,9 @@ public class ExecutorsTest {
 //
 //        executorsTest.newScheduledThreadPool();
 
-        executorsTest.scheduledThreadPool();
+//        executorsTest.scheduledThreadPool();
+        // 主线程继续执行    另一根线程单独跑
+        System.out.println("谁先执行");
 
     }
 }
