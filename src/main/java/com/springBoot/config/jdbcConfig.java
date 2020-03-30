@@ -1,20 +1,21 @@
 package com.springBoot.config;
 
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.springframework.core.io.DefaultResourceLoader;
+import org.springframework.core.io.Resource;
 import com.alibaba.druid.pool.DruidDataSource;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.mapper.MapperScannerConfigurer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import javax.sql.DataSource;
-import java.security.PrivateKey;
 
 
 // @Configuration：声明我们JdbcConfig是一个配置类
@@ -113,45 +114,33 @@ public class jdbcConfig implements EnvironmentAware {
      * 构建会话工厂
      *
      * @return
-     * @throws Exception
      */
     @Bean(name = "sqlSessionFactory")
-    public SqlSessionFactory sqlSessionFactory() throws Exception {
-        SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
-        factoryBean.setDataSource(dataSource());
-        return factoryBean.getObject();
+    SqlSessionFactory sqlSessionFactory() throws Exception {
+        SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
+        //设置数据源
+        sqlSessionFactoryBean.setDataSource(dataSource());
+        // 加载本地配置文件
+        PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+        Resource[] resources = resolver.getResources("classpath:mappers/*Mapper.xml");
+        sqlSessionFactoryBean.setMapperLocations(resources);
+//        sqlSessionFactoryBean.setConfigLocation(new DefaultResourceLoader().getResource("classpath:config/mybatis-config.xml"));
+        return sqlSessionFactoryBean.getObject();
+
     }
 
-    /**
-     * 构建会话工厂
-     * @return
-    //     */
-//    @Bean(name = "sqlSessionFactory")
-//    SqlSessionFactoryBean sqlSessionFactory() throws IOException {
-//        SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
-//        //设置数据源
-//        factoryBean.setDataSource(dataSource());
-//        //设置元数据解析器
-////        factoryBean.setDefaultMetaDataParse(DefaultMetaDataParse.class);
-//        //构建mybatis.properties
-//        factoryBean.setConfigurationProperties(buildMybatisProperties());
-//        //构建插件拦截器
-////        factoryBean.setPlugins(new PaginationInterceptor());
-//        return factoryBean;
+//    /**
+//     * 构建扫描设置
+//     *
+//     * @return
+//     */
+//    @Bean(name = "mapperScannerConfigurer")
+//    MapperScannerConfigurer mapperScannerConfigurer() {
+//        MapperScannerConfigurer configurer = new MapperScannerConfigurer();
+//        configurer.setBasePackage("com.springBoot.mapper");
+//        configurer.setAnnotationClass(Mapper.class);
+//        return configurer;
 //    }
-
-    /**
-     * 构建扫描设置
-     *
-     * @return
-     */
-    @Bean(name = "mapperScannerConfigurer")
-    MapperScannerConfigurer mapperScannerConfigurer() {
-        MapperScannerConfigurer configurer = new MapperScannerConfigurer();
-        configurer.setBasePackage("com.springBoot.dao");
-        configurer.setAnnotationClass(Mapper.class);
-        return configurer;
-    }
 
     /**
      * 事务管理器

@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.springBoot.dao.ProductorMapper">
+<mapper namespace="com.springBoot.mapper.ProductorMapper">
 
-    <!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="Librarian" id="LibrarianMap">
+    <resultMap type="com.springBoot.entity.Librarian" id="LibrarianMap">
 
         <id column="id" property="id" jdbcType="INTEGER" />
         <result column="userName" property="useName" jdbcType="VARCHAR" />
@@ -15,11 +14,11 @@
 
 
 
-    <select id="selectLibrarian" parameterType="INTEGER" resultMap="LibrarianMap">
+    <select id="selectLibrarian"  resultType="com.springBoot.entity.Librarian">
         select *
         from test
         where 1=1
-            and id = #{id,jdbcType=INTEGER}
+            and id = #{id}
     </select>
 
 

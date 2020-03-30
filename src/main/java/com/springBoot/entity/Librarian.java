@@ -1,4 +1,4 @@
-package com.springBoot.dao;
+package com.springBoot.entity;
 
 public class Librarian {
 

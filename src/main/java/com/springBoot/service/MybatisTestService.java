@@ -1,10 +1,17 @@
 package com.springBoot.service;
 
-import com.springBoot.dao.Librarian;
+import com.springBoot.entity.Librarian;
+import com.springBoot.mapper.ProductorMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-public interface MybatisTestService {
+@Service
+public class MybatisTestService {
 
-public void selectInfoById(int id);
+    @Autowired
+    private ProductorMapper productorMapper;
 
-    Librarian selectLibrarian(int id);
+    public Librarian selectLibrarian(int id) {
+        return productorMapper.selectLibrarian(id);
+    }
 }
