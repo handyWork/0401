@@ -122,7 +122,8 @@ public class jdbcConfig implements EnvironmentAware {
         sqlSessionFactoryBean.setDataSource(dataSource());
         // 加载本地配置文件
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        Resource[] resources = resolver.getResources("classpath:mappers/*Mapper.xml");
+//        Resource[] resources = resolver.getResources("classpath:mappers/*Mapper.xml");
+        Resource[] resources = resolver.getResources(ev.getProperty("mybatis.mapper-locations"));
         sqlSessionFactoryBean.setMapperLocations(resources);
 //        sqlSessionFactoryBean.setConfigLocation(new DefaultResourceLoader().getResource("classpath:config/mybatis-config.xml"));
         return sqlSessionFactoryBean.getObject();
