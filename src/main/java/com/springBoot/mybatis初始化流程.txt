@@ -1,0 +1,383 @@
+<!DOCTYPE mapper PUBLIC "http://jepaas.com/dtd" "http://jepaas.com/dtd/mybatis-3-mapper.dtd">
+
+
+----------------------------初始化执行逻辑----------------------------Start
+
+SqlSessionFactoryBean---入口
+
+		getObject: SqlSessionFactoryBean继承了FactoryBean<SqlSessionFactory>接口，所以初始化时调用getObject 方法返回SqlSessionFactory
+
+		调用关系: getObject---afterPropertiesSet---buildSqlSessionFactory
+		
+			//使用XML配置文件创建 XMLConfigBuilder
+				//创建 XPathParser，使用 XMLMapperEntityResolver
+			
+			//获取配置对象 xmlConfigBuilder.getConfiguration();	Configuration 在 XMLConfigBuilder 的构造方法中初始化
+		
+			//扫描实体类所在的包 typeAliasesPackage , 将实体添加到类型映射[Configuration.typeAliasRegistry]中, 默认驼峰
+					例如 bucketdo => class com.je.ibatis.test.BucketDO
+			
+			//添加Xml配置的别名 typeAliases 自己<typeAlias alias="user" type="cn.com.mybatis.pojo.User"/>
+
+			//注册插件 plugins
+			
+			//注册类型处理器 typeHandlersPackage & typeHandlers
+			
+			//注册自定义 LanguageDriver 默认 XMLLanguageDriver 可将指定字符串转换成自己想要的格式,如:   (#{map}) ==>  <foreach collection=\"$1\" index=\"__key\" separator=\",\">\\${__key}</foreach>
+			
+				1 XMLConfigBuilder
+
+				解析mybatis中configLocation属性中的全局xml文件，内部会使用XMLMapperBuilder解析各个xml文件。
+						XPathParser 解析器, XMLMapperEntityResolver 解析规则
+
+				2 XMLMapperBuilder
+
+				遍历mybatis中mapperLocations属性中的xml文件中每个节点的Builder，比如user.xml，内部会使用XMLStatementBuilder处理xml中的每个节点。
+
+				3 XMLStatementBuilder
+
+				解析xml文件中各个节点，比如select,insert,update,delete节点，内部会使用XMLBuilder处理节点的sql部分，遍历产生的数据会丢到Configuration的mappedStatements中。
+
+				4 XMLBuilder
+
+				解析xml中各个节点sql部分的Builder。
+			
+				XMLLanguageDriver(处理xml中的sql，RawLanguageDriver处理静态sql)：
+
+				XMLLanguageDriver内部会使用XMLBuilder解析xml中的sql部分。
+			
+			//增加数据库厂商标识 databaseIdProvider 
+			
+			//接卸xml配置文件 xmlConfigBuilder.parse
+			
+			//创建环境对象 Environment 未指定事务工厂类时实例化一个新的 SpringManagedTransactionFactory
+			
+			//遍历 mapper 文件 并解析  XMLMapperBuilder.parse
+			
+				XMLMapperBuilder.parse
+				
+					configurationElement(parser.evalNode("/mapper"));
+						获取 namespace
+						入参Map映射
+						parameterMapElement(context.evalNodes("/mapper/parameterMap"));
+						结果集Map映射
+						resultMapElements(context.evalNodes("/mapper/resultMap"));
+						通用sql节点
+						sqlElement(context.evalNodes("/mapper/sql"));
+						语句标签解析
+						buildStatementFromContext(context.evalNodes("select|insert|update|delete"));
+						
+							添加MappedStatement	
+							XMLStatementBuilder.parseStatementNode();
+								
+								
+								SqlSource = XMLLanguageDriver.createSqlSource
+										
+										XMLScriptBuilder.parseScriptNode
+										XMLScriptBuilder.parseDynamicTags
+				
+				bindMapperForNamespace();
+				parsePendingResultMaps();
+				parsePendingCacheRefs();
+				parsePendingStatements();
+			
+			
+			
+			
+
+Configuration---全部xml集合对应的实体
+
+----------------------------初始化执行逻辑----------------------------END
+
+----------------------------Dao调用Sql动态构建逻辑----------------------------
+
+DynamicSqlSource最终会转换为一个静态StaticSqlSource,然后生成BoundSql交给mybatis执行
+
+
+
+DynamicSqlSource---动态Sql生成器---每一个实体对应一次MappedStatement的调用
+
+DynamicContext---sql语句对象，包含sql语句和方法参数
+
+	bindings---方法参数
+		_parameter---方法参数
+		_databaseId---数据库厂商标识
+	
+	sqlBuilder---完整sql语句
+	
+	uniqueNumber---
+
+
+SqlNode---父级节点
+
+MixedSqlNode---多个节点集合节点
+
+StaticTextSqlNode---静态字符串节点
+
+	text---sql语句
+
+IfSqlNode---if动态节点
+
+	ExpressionEvaluator=--表达式计算器
+	
+	包含一个 MixedSqlNode
+
+TextSqlNode---含变量的Sql语句
+
+	text---sql语句
+	
+	BindingTokenParser---获取变量值 BindingTokenParser.handleToken
+	
+	GenericTokenParser---变量转换类  GenericTokenParser.parse(text)   ${}转换成 具体值
+			示例:and bucket = ${bucket} and bucket = #{bucket}  ==>  and bucket = 123 and bucket = #{bucket} 
+	
+
+最终结果
+
+	DynamicContext.getSql() ==》 
+		SELECT  id,bucket,permission,url FROM je_document_bucket where 1=1
+         and bucket = 123 and bucket = #{bucket}  
+        and bucket = 123 and bucket = #{bucket}
+
+
+SqlSourceBuilder---静态Sql构建
+
+		生成StaticSqlSource对象，#{}转换成 ? 占位符，并且填充参数
+		SqlSourceBuilder.parse(context.getSql(), parameterType, context.getBindings());
+
+
+
+----------------------------查找Sql动态构建逻辑----------------------------END
+
+
+----------------------------SelectKey主键策略----------------------------
+
+
+XMLStatementBuilder.parseStatementNode
+
+
+processSelectKeyNodes 查找所有的 selectKey 元素
+
+
+parseSelectKeyNodes 遍历解析 selectKey
+
+databaseIdMatchesCurrent 校验 selectKey 是否可以注册
+
+		为 selectKey 生成唯一标识 父级元素ID + SelectKeyGenerator.SELECT_KEY_SUFFIX  [!selectKey];
+
+		如果 configuration.getDatabaseId() 不为空 校验 selectKey 元素的 databaseId 属性与 configuration.getDatabaseId() 是否一致 不一致返回false 一致返回true
+
+		如果 selectKey 元素的 databaseId 不为空 返回false
+
+		判断 configuration 中是否已经注册了当前 selectKey唯一标识 对应的 MappedStatement  如果没有有 返回true
+		
+		configuration 已经注册了当前 selectKey 判断已注册的 MappedStatement 的 DatabaseId 是否为 null  返回 getDatabaseId() == null
+
+parseSelectKeyNode 注册 selectKey 对应的 MappedStatement 注册键生成策略 SelectKeyGenerator
+
+		获取元素信息
+
+		使用 LanguageDriver 创建 SqlSource
+
+		使用 MapperBuilderAssistant.addMappedStatement 添加 MappedStatement
+
+		从 configuration.getMappedStatement 获取 selectKey 对应的 MappedStatement
+
+		示例话 SelectKeyGenerator 对象 添加到configuration configuration.addKeyGenerator
+
+removeSelectKeyNodes 将 selectKey 节点从dom结构中删除
+
+----------------------------SelectKey主键策略----------------------------END
+
+
+
+----------------------------初始化扫描 Mapper----------------------------
+
+MapperScannerConfigurer(继承 BeanDefinitionRegistryPostProcessor 使用 postProcessBeanDefinitionRegistry BeanDefinitionRegistry参数 可向 IOC 容器中增加指定名称的实例)
+
+MapperFactoryBean(继承 FactoryBean 使用 getObject 返回指定泛型的实例) getObject
+
+	SqlSessionTemplate  getMapper
+
+	Configuration  mapperRegistry.getMapper(type, sqlSession)
+
+MapperRegistry getMapper 调用 MapperProxyFactory 创建代理实例
+ 
+MapperProxyFactory 创建 MapperProxy 代理实例
+
+将 MapperProxy 代理实例加入IOC容器 此时 Mapper 接口已经可以被 Service 注入
+
+service 注入的 Mapper 实例  实际上是一个动态代理对象 MapperProxy
+
+----------------------------初始化扫描 Mapper----------------------------
+
+
+----------------------------语句执行调用链----------------------------
+
+service 注入的 Mapper 实例  实际上是一个动态代理对象 MapperProxy
+
+
+MapperProxy
+  SqlSession sqlSession; 
+  Class mapperInterface; 对应的Mapper5
+  Map<Method, MapperMethod> methodCache; 缓存 MapperMethod
+
+MapperProxy.invoke(Object proxy, Method method, Object[] args) 代理对象执行方法
+
+MapperProxy.cachedMapperMethod 获取 MapperMethod
+
+new MapperMethod  -->  new SqlCommand  
+	
+	resolveMappedStatement 使用 configuration.getMappedStatement(statementId) 获取 Mapper 方法对应的 MappedStatement
+
+new MethodSignature
+	
+	获取返回值类型 returnType
+	
+MapperMethod.execute 执行方法
+
+	判断 SqlCommandType 调用 DefaultSqlSession 的不同语句 insert update delete
+
+	获取返回值类型 returnType 判断执行哪个 select 相关方法
+
+JE.DB.executeSql("UPDATE JE_OA_NJGL  SET NJGL_WYNJ = 2,NJGL_YYNJ = 1.5  where NJGL_RY_NAME =''")
+DefaultSqlSession 
+
+     获取 MappedStatement 调用执行器 ReuseExecutor(继承抽象类 BaseExecutor) 操作 MappedStatement  
+
+Executor 语句执行器
+
+	调用 configuration.newStatementHandler 获取 StatementHandler 语句处理器
+			
+			创建 StatementHandler 
+				
+				会执行 BaseStatementHandler.generateKeys 此时调用 keyGenerator.processBefore
+			
+			
+			InterceptorChain 遍历 Interceptor 集合 创建 StatementHandler 的代理对象
+			
+			
+	Executor.prepareStatement 生成预处理对象 Statement
+			
+			调用 StatementHandler.prepare  
+			
+			调用 tatementHandler.instantiateStatement 
+				
+				通过主键策略 生成对应的 prepareStatement 如果是自增  prepareStatement(String sql, String columnNames[]) 指定主键名称
+
+	调用 StatementHandler--BaseStatementHandler 对应方法如 update
+	
+			StatementHandler.update 先执行语句 然后执行 keyGenerator.processAfter
+	
+			Jdbc3KeyGenerator 通过 Statement.getGeneratedKeys 获取自增主键值
+
+
+StatementHandler
+
+StatementHandler 接口的实现大致有四个，其中三个实现类都是和JDBC中的Statement响对应的：
+
+SimpleStatementHandler，这个很简单了，就是对应我们JDBC中常用的Statement接口，用于简单SQL的处理；
+PreparedStatementHandler，这个对应JDBC中的PreparedStatement，预编译SQL的接口；
+CallableStatementHandler，这个对应JDBC中CallableStatement，用于执行存储过程相关的接口；
+RoutingStatementHandler，这个接口是以上三个接口的路由，没有实际操作，只是负责上面三个StatementHandler的创建及调用。
+
+
+
+ResultSetHandler
+
+结果处理handler
+
+usermapper.insert
+
+
+usermapper.insert!selectKey
+
+
+
+
+
+
+1.制定主键策略
+
+	mysql数据库自增
+
+	mysql语句查询
+
+	mysql-UUID
+
+	Oracle语句查询
+
+	Oracle-UUID
+
+2.新增路由主键策略
+
+3.builder->cache->parse
+
+4.入口可指定parse实现
+
+5.StatementHandler 处理主键策略
+
+6.重写 getMappedStatement 支持公用 MappedStatement
+
+7.设计 BaseMapper
+
+8.MetaSqlNode 解析
+
+
+
+MetaKeyGenerator
+
+
+insert - MappedStatement - KeyGenerator
+
+
+KeyGenerator - 100
+
+
+
+3.条件解析器完善
+
+
+1.分页
+
+
+2.公共service
+
+
+1.可指定comon
+
+---------------------------
+
+load
+
+   sql之间优先级
+
+	查询表单参数
+	
+		{"tree":[],"quick":[],"group":[],"order":[]}
+		{"tree":[{"code":"XMINFO_XMZT_CODE","type":"in","value":["02","03"]}],"quick":[{"code":"XMINFO_XMZT_NAME","type":"=","value":"3rewgfeawfased","keyword":"1"},{"code":"XMINFO_XMMC","type":"like","value":"3rewgfeawfased","keyword":"1"},{"code":"XMINFO_KHMC","type":"like","value":"3rewgfeawfased","keyword":"1"}],"group":[],"order":[]}
+	
+	功能自定义sql
+	
+	功能自定义order
+	
+	功能数据权限sql
+	
+	角色数据权限sql
+	
+	-----查询策略
+	
+save	
+
+	构建编号
+
+	检测子功能是否增加ROOT节点
+
+	视图 回显
+
+JE.DB.executeSql("UPDATE JE_OA_JBSQ  SET NJGL_WYNJ = 2,NJGL_YYNJ = 1.5  where JE_OA_JBSQ_ID ='fnzSgyjuCGtugAAOr26'")
+
+{
+	
+}
+
