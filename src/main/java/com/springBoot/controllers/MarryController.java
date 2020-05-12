@@ -27,4 +27,12 @@ public class MarryController {
         int day = (int) ((s1 - s2) / 1000 / 60 / 60 / 24);
         return "距离杨智、戚静雨结婚日期还有" + day + "天，加油！";
     }
+
+    @RequestMapping("/register")
+    @ResponseBody
+    public String register(){
+        //设定登记日期
+        String dstr = "2020-05-06 08:08:08 ";
+        return "戚女士晋升为杨夫人的日期是" + dstr + ",恭喜恭喜！";
+    }
 }
