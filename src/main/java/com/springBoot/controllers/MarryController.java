@@ -17,7 +17,7 @@ public class MarryController {
     @ResponseBody
     public String marry() throws ParseException {
         //设定纪念日期
-        String dstr = "2020-04-12 08:08:08 ";
+        String dstr = "2020-10-06 08:08:08 ";
         //获取当前日期
 //        Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
