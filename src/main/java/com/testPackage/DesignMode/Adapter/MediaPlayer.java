@@ -3,7 +3,7 @@ package com.testPackage.DesignMode.Adapter;
 public interface MediaPlayer {
     /**
      * 播放
-     * @param audioType 声音类型
+     * @param audioType 音频类型
      * @param fileName  文件名称
      */
      void play(String audioType,String fileName);
