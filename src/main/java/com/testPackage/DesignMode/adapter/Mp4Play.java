@@ -1,4 +1,4 @@
-package com.testPackage.DesignMode.Adapter;
+package com.testPackage.DesignMode.adapter;
 
 public class Mp4Play implements AdvancedMediaPlayer {
     @Override

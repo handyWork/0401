@@ -1,4 +1,4 @@
-package com.testPackage.DesignMode.Adapter;
+package com.testPackage.DesignMode.adapter;
 
 // 高级媒体播放器
 public interface AdvancedMediaPlayer {

@@ -1,4 +1,4 @@
-package com.testPackage.DesignMode.Adapter;
+package com.testPackage.DesignMode.adapter;
 
 /**
  * 实现了 MediaPlayer 接口的适配器类
