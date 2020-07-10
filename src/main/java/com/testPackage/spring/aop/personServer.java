@@ -1,4 +1,4 @@
-package com.testPackage.aop;
+package com.testPackage.spring.aop;
 
 public interface personServer {
 

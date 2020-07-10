@@ -1,4 +1,4 @@
-package com.testPackage.aop;
+package com.testPackage.spring.aop;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -11,7 +11,7 @@ import java.util.Arrays;
 @Component//声明这是一个组件，泛指...可以去掉
 public class AspectIntercepter {
 
-    @Pointcut(value = "execution(* com.testPackage.aop.personServerImpl.*(..))")
+    @Pointcut(value = "execution(* com.testPackage.spring.aop.personServerImpl.*(..))")
     private void pointCut() {//定义一个切入点 后面的通知直接引入切入点方法pointCut即可            personServerImpl下面的所有方法
     }
 
