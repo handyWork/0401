@@ -63,8 +63,8 @@ public class NIOServer {
                     // 设置成非阻塞
                     channel.configureBlocking(false);
 
-                    //在这里可以给客户端发送信息哦
-                    channel.write(ByteBuffer.wrap(new String("向客户端发送了一条信息").getBytes()));
+                    //在这里可以给客户端发送信息哦  向客户端发送了一条信息
+                    channel.write(ByteBuffer.wrap(new String("To Client:22222222").getBytes()));
                     //在和客户端连接成功之后，为了可以接收到客户端的信息，需要给通道设置读的权限。
                     channel.register(this.selector, SelectionKey.OP_READ);
 
@@ -94,9 +94,6 @@ public class NIOServer {
         byte[] data = buffer.array();
         String msg = new String(data).trim();
         System.out.println("服务端收到信息：" + msg);
-        ByteBuffer outBuffer = ByteBuffer.wrap(msg.getBytes());
-        channel.write(outBuffer);// 将消息回送给客户端
-
     }
 
     /**
