@@ -59,7 +59,6 @@ public class NIOClient {
                     // 如果正在连接，则完成连接
                     if (channel.isConnectionPending()) {
                         channel.finishConnect();
-
                     }
                     // 设置成非阻塞
                     channel.configureBlocking(false);
