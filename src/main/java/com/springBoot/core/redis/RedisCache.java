@@ -1,6 +1,6 @@
 package com.springBoot.core.redis;
 
-import io.netty.util.internal.StringUtil;
+import cn.hutool.core.util.StrUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.connection.RedisZSetCommands;
@@ -52,7 +52,7 @@ public class RedisCache {
      */
     public void delByPrefix(String prefix, String split) {
         Set<String> keys;
-        if (StringUtil.isNullOrEmpty(split)) {
+        if (StrUtil.isEmpty(split)) {
             keys = redisTemplate.keys(String.format("%s%s%s", prefix, split, "*"));
         } else {
             keys = redisTemplate.keys(String.format("%s%s", prefix, "*"));
@@ -284,7 +284,7 @@ public class RedisCache {
      * @Param key: 键
      * @Param min: 是否以最小
      * @Param max: 是否以最大
-     * @return: java.util.Set<org.springframework.data.redis.core.ZSetOperations.TypedTuple   <   java.lang.Object>>
+     * @return: java.util.Set<org.springframework.data.redis.core.ZSetOperations.TypedTuple       <       java.lang.Object>>
      **/
     public Set<ZSetOperations.TypedTuple<Object>> zSetReverseRangeByScoreWithScores(String key, double min, double max) {
         return redisTemplate.opsForZSet().reverseRangeByScoreWithScores(key, min, max);
@@ -307,7 +307,7 @@ public class RedisCache {
      * @Param key: 键
      * @Param start: 开始位置
      * @Param end: 结束位置
-     * @return: java.util.Set<org.springframework.data.redis.core.ZSetOperations.TypedTuple   <   java.lang.Object>>
+     * @return: java.util.Set<org.springframework.data.redis.core.ZSetOperations.TypedTuple       <       java.lang.Object>>
      **/
     public Set<ZSetOperations.TypedTuple<Object>> zSetReverseRangeWithScores(String key, long start, long end) {
         return redisTemplate.opsForZSet().reverseRangeWithScores(key, start, end);

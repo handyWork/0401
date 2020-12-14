@@ -33,6 +33,12 @@
     </properties>
 
     <dependencies>
+        <!--netty包-->
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+            <version>5.0.0.Alpha2</version>
+        </dependency>
 
         <!--用于监控端点 （监控端点用的）-->
         <dependency>
