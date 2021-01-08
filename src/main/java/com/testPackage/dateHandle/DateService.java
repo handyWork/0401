@@ -8,12 +8,9 @@ import com.alibaba.fastjson.JSONObject;
 public interface DateService {
     /**
      * 获取 时间  天数 (精确计算)
-     *
-     * @param startTimeStr
-     * @param endTimeStr
-     * @param returnObj
+     * @param startTimeStr 开始申请时间
+     * @param endTimeStr   结束时间
+     * @param returnObj    返回给前端的对象
      */
     void handleDateAndHour(String startTimeStr, String endTimeStr, JSONObject returnObj);
-
-
 }
