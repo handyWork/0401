@@ -9,7 +9,7 @@ package com.testPackage.designMode29.factory;
  *
  * 从设计角度讲：抽象类是从子类中发先共有的东西，泛化出父类，然后子类继承父类，  而接口是压根不知道有子类，方法如何实现还不确定，进行的预定义。
  */
-public class testMain {
+public class FactoryMain {
 
 
     public static void main(String[] args) {
