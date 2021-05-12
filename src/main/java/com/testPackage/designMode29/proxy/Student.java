@@ -1,4 +1,4 @@
-package com.testPackage.proxy;
+package com.testPackage.designMode29.proxy;
 
 /**
  * 创建学生类

@@ -1,11 +1,11 @@
-package com.testPackage.proxy;
+package com.testPackage.designMode29.proxy;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
-public class testProxy {
+public class ProxyMain {
     public static void main(String[] args) {
         //创建一个实例对象  这个是被代理的对象
         Student zhangSan = new Student("张三");

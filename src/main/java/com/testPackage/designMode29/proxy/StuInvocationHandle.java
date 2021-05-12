@@ -1,4 +1,4 @@
-package com.testPackage.proxy;
+package com.testPackage.designMode29.proxy;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -19,7 +19,7 @@ public class StuInvocationHandle<T> implements InvocationHandler {
      *
      * @param proxy 代表动态代理对象
      * @param method 代表正在执行的方法
-     * @param args 代表穿进去的参数
+     * @param args 代表传进去的参数
      * @return
      * @throws Throwable
      */

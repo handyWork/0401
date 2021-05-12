@@ -1,7 +1,5 @@
 package com.testPackage.threadTest;
 
-import static com.testPackage.proxy.MonitorUtil.start;
-
 public class demo1 implements Runnable {
 
     private String account;

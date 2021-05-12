@@ -1,4 +1,4 @@
-package com.testPackage.proxy;
+package com.testPackage.designMode29.proxy;
 
 /**
  * 代理类     代理跑步者

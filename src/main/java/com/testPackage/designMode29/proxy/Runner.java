@@ -1,4 +1,4 @@
-package com.testPackage.proxy;
+package com.testPackage.designMode29.proxy;
 
 public class Runner implements  IRunner {
     @Override
