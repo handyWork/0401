@@ -1,4 +1,4 @@
-package com.testPackage.designMode29.proxy;
+package com.testPackage.designMode29.proxy.test2;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
