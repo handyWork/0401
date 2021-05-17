@@ -1,4 +1,4 @@
-package com.testPackage.designMode29.factory;
+package com.testPackage.designMode29.simpleFactory;
 
 /**
  * 武器接口  用于给动物进行相关的功能升级

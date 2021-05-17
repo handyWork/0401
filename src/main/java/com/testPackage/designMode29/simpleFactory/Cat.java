@@ -1,4 +1,4 @@
-package com.testPackage.designMode29.factory;
+package com.testPackage.designMode29.simpleFactory;
 
 /**
  * 猫
