@@ -1,6 +1,7 @@
 package com.springBoot.controllers;
 
 
+import com.springBoot.utils.BaseResult;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,5 +27,11 @@ public class MarryController {
         long s2 = System.currentTimeMillis();//得到当前的毫秒
         int day = (int) ((s1 - s2) / 1000 / 60 / 60 / 24);
         return "距离杨智、戚静雨结婚日期还有" + day + "天，加油！";
+    }
+
+    @RequestMapping("/test")
+    @ResponseBody
+    public BaseResult test() {
+        return  BaseResult.success("返回自定义格式");
     }
 }
